@@ -1,0 +1,62 @@
+Proqram bashladiqda ekranda 2 sechim olacaq:
+
+Start
+Exit
+
+Start basildiqda sizden ad ve soyadiniz sorushulacaq, ad & soyad yazdiqdan sonra OK duymesini basin. Sonraki merhelede 2 sechim qarshiniza chixacaq:
+
+Start Game
+Exit Game
+
+Start Game basildiqdan sonra artiq oyun bashlayir ve size adinizla "Xosh geldiniz" deyilir:
+Maraqli olmasi uchun 3, 2, 1 kimi geri sayim edib oyunu 3 saniye sonra bashlada bilersiz.
+
+Oyuna bashladiqdan sonraki struktur:
+Her sualin oz pul deyeri olacaq. Proqram her defe bashladiqda suallar qarishdirilmalidir: meselen, bu defe 3-cu sirada gelen sual sonra 9-cu gelsin.
+
+1 - 1000
+2 - 2000
+3 - 5000
+4 - 10000
+5 - 20000
+6 - 40000
+7 - 80000 - eger siz 7-ci suala chatdizsa o zaman sorushulur:
+davam etmek isteyirsiz? YES / NO. Yes basilsa o halda artiq bura qeder qazandiginiz pul hesablanir ve oyun yekunlashir. No basilsa oyuna davam edirsiz.
+8 - 150000
+9 - 300000
+10 - 1000000
+
+
+3 JOKER olacaq:
+
+1. 50% komek - 4 variantdan sehv olan ikisini silir:
+Tutaq ki, cavab A-dir ve siz bu jokeri sechdiz, message olaraq deyir ki "B ve D sehvdir, cavab ya A, ya da C olacaq"
+
+2. Dosta zeng - bu zaman size deyilir: "mence cavab A-dir"
+
+3. Tamashachilar - bu halda cavablari faiz nisbeti ile deye bilersiz:
+"Tamashachilar choxlugu cavabin A oldugunu dushunur"
+
+Her jokeri yalniz 1 defe istifade ede bilersiz.
+
+
+STRUKTUR NUMUNESI:
+
+Sual 1:
+  Kanadanin paytaxti hansi sheherdir?
+  A. Paris
+  B. Madrid
+  C. Ottava
+  D. Roma
+
+ Jokerler:
+  50%
+  Dosta zeng
+  Tamashachilar
+
+Suallar fayldan oxunmalidir ve en sonda playerin qazandigi pul ve neche dogru, neche sehv etdiyi ekranda gosterilmelidir. Proqram hech bir halda error vermemelidir. Modullar mentiqi olmalidir, her bir class ferqli modulda olmalidir ve en sonda hamisi Mainde chagirilmalidir ki, proqram ishlesin. OOP prinsiplerine maksimum riayet edilmelidir.
+
+
+Yekun: Proqramin ishleyishini ve dizaynini dinamik ve seliqeli edin.
+
+UGURLAR!

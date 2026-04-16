@@ -1,0 +1,17 @@
+import random
+
+def questions():
+    questionss = [
+        ("Kanadanın paytaxtı?", ["Paris","Madrid","Ottava","Roma"], "C"),
+        ("2+2?", ["3","4","5","6"], "B"),
+        ("Ən böyük okean?", ["Atlantik","Hind","Sakit","Arktik"], "C"),
+        ("Python kim yaradıb?", ["Guido","Elon","Bill","Mark"], "A"),
+        ("HTML nədir?", ["Hyper Text Markup Language","Home Tool","Hyper","None"], "A"),
+        ("CPU nə edir?", ["Yaddaş","Hesablama","Ekran","Səs"], "B"),
+        ("RAM nədir?", ["Yaddaş","Disk","CPU","GPU"], "A"),
+        ("Ən böyük planet?", ["Mars","Yer","Yupiter","Venera"], "C"),
+        ("Su formulu?", ["H2O","CO2","O2","NaCl"], "A"),
+        ("İşıq sürəti?", ["300000","150000","100000","50000"], "A")
+    ]
+    random.shuffle(questionss)
+    return questionss
