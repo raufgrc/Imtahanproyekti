@@ -62,17 +62,14 @@ def game_page():
     label = tk.Label(window, text="")
     label.pack(pady=20)
 
-    count = [3]
-
-    def countdown():
-        if count[0] > 0:
-            label.config(text=f"Oyun başlayır: {count[0]}",font=("Verdana", 15),fg="white",bg="skyblue")
-            count[0] -= 1
-            window.after(1000, countdown)
+    def countdown(count):
+        if count > 0:
+            label.config(text=f"Oyun başlayır: {count}",font=("Verdana", 15),fg="white",bg="skyblue")
+            window.after(1000, countdown, count - 1)
         else:
             Game(window, player_name)
 
-    countdown()
+    countdown(3)
 
 
 start_page()

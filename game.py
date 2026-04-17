@@ -1,6 +1,23 @@
 import tkinter as tk
 from tkinter import messagebox
-from questions import *
+import random
+
+
+def load_questions(self):
+    questions = []
+
+    with open("questions.txt", "r", encoding="utf-8") as file:
+        for line in file:
+            parts = line.strip().split("|")
+
+            question = parts[0]
+            options = parts[1].split(",")
+            correct = parts[2]
+
+            questions.append((question, options, correct))
+
+    random.shuffle(questions)
+    return questions
 
 class Game:
     def __init__(self, window, player_name):
@@ -10,7 +27,7 @@ class Game:
         self.moneys = [1000, 2000, 5000, 10000, 20000,
                        40000, 80000, 150000, 300000, 1000000]
 
-        self.questions = questions()
+        self.questions = load_questions(self)
 
         self.index = 0
         self.money = 0
@@ -27,6 +44,10 @@ class Game:
 
         self.setup()
         self.next_question()
+        self.questions = load_questions(self)
+
+
+
 
     def setup(self):
         for widget in self.window.winfo_children():
