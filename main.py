@@ -1,5 +1,7 @@
-from start import *
+import tkinter as tk
+from start import App
 
-start_page()
-name_page()
-game_page()
+
+window = tk.Tk()
+app = App(window)
+window.mainloop()

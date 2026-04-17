@@ -3,33 +3,29 @@ from tkinter import messagebox
 import random
 
 
+class QuestionManager:
+    def load_questions(self):
+        questions = []
 
-def load_questions():
-    questions = []
+        with open("questions.txt", "r", encoding="utf-8") as file:
+            for line in file:
+                parts = line.strip().split("|")
 
-    with open("questions.txt", "r", encoding="utf-8") as file:
-        for line in file:
-            parts = line.strip().split("|")
+                question = parts[0]
+                options = parts[1].split(",")
+                correct = parts[2]
 
-            question = parts[0]
-            options = parts[1].split(",")
-            correct = parts[2]
+                questions.append((question, options, correct))
 
-            questions.append((question, options, correct))
+        random.shuffle(questions)
+        return questions
 
-    random.shuffle(questions)
-    return questions
 
-class Game:
-    def __init__(self, window, player_name):
-        self.window = window
+class GameLogic:
+    def __init__(self, player_name):
         self.player_name = player_name
 
-        self.moneys = [1000, 2000, 5000, 10000, 20000,
-                       40000, 80000, 150000, 300000, 1000000]
-
-        self.questions = load_questions()
-
+        self.moneys = [1000, 2000, 5000, 10000, 20000,40000, 80000, 150000, 300000, 1000000]
         self.index = 0
         self.money = 0
         self.correct = 0
@@ -40,6 +36,23 @@ class Game:
             "call": True,
             "audience": True
         }
+
+
+class Game:
+    def __init__(self, window, player_name):
+        self.window = window
+        self.player_name = player_name
+
+        self.q_manager = QuestionManager()
+        self.questions = self.q_manager.load_questions()
+
+        self.logic = GameLogic(player_name)
+
+        self.index = self.logic.index
+        self.money = self.logic.money
+        self.correct = self.logic.correct
+        self.jokers = self.logic.jokers
+        self.wrong = self.logic.wrong
 
         self.buttons = {}
 
@@ -74,7 +87,7 @@ class Game:
                 font=("Verdana", 11, "bold"),
                 bg="#2a2f6f",
                 fg="white",
-                command = lambda k=key: self.check(k)
+                command=lambda k=key: self.check(k)
             )
             btn.pack(pady=5)
             self.buttons[key] = btn
@@ -82,9 +95,9 @@ class Game:
         joker_frame = tk.Frame(frame, bg="#0b0f2f")
         joker_frame.pack(pady=15)
 
-        tk.Button(joker_frame, text="50/50",bg="blue", command=self.joker_50,fg="white").pack(side="left", padx=8)
-        tk.Button(joker_frame, text="Dostdan Kömək",bg="blue", command=self.joker_friend,fg="white").pack(side="left", padx=8)
-        tk.Button(joker_frame, text="Tamaşaçılardan Kömək",bg="blue", command=self.joker_audience,fg="white").pack(side="left", padx=8)
+        tk.Button(joker_frame, text="50/50", bg="blue",command=self.joker_50, fg="white").pack(side="left", padx=8)
+        tk.Button(joker_frame, text="Dostdan Kömək", bg="blue",command=self.joker_friend, fg="white").pack(side="left", padx=8)
+        tk.Button(joker_frame, text="Tamaşaçılardan Kömək", bg="blue",command=self.joker_audience, fg="white").pack(side="left", padx=8)
 
     def next_question(self):
         if self.index >= len(self.questions):
@@ -92,7 +105,7 @@ class Game:
             return
 
         q = self.questions[self.index]
-        self.label.config(text=f"{q[0]}")
+        self.label.config(text=q[0])
 
         for i, key in enumerate(["A", "B", "C", "D"]):
             self.buttons[key].config(
@@ -105,7 +118,7 @@ class Game:
         q = self.questions[self.index]
 
         if ans == q[2]:
-            self.money = self.moneys[self.index]
+            self.money = self.logic.moneys[self.index]
             self.correct += 1
 
             self.buttons[ans].config(bg="green")
@@ -122,6 +135,7 @@ class Game:
                 if not messagebox.askyesno("Info", "Siz artıq 7-ci sualdasınız, davam etmık istəyirsiniz?"):
                     self.end_game()
                     return
+
             self.next_question()
 
         else:
@@ -132,7 +146,6 @@ class Game:
 
             messagebox.showerror("Səhv!", f"Səhv, Düzgün cavab: {q[2]}-dir!")
             self.end_game()
-
 
     def joker_50(self):
         if not self.jokers["50"]:
@@ -153,8 +166,9 @@ class Game:
     def joker_friend(self):
         if not self.jokers["call"]:
             return
+
         q = self.questions[self.index]
-        messagebox.showinfo("Dostdan Kömək", f"Məncə cavab {q[2]}-dir! ")
+        messagebox.showinfo("Dostdan Kömək", f"Məncə cavab {q[2]}-dir!")
         self.jokers["call"] = False
 
     def joker_audience(self):
@@ -162,7 +176,6 @@ class Game:
             return
 
         q = self.questions[self.index]
-
         messagebox.showinfo("Tamaşaçı", f"Çoxluq {q[2]} cavabı doğrudur deyir!")
         self.jokers["audience"] = False
 
