@@ -1,8 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-# from PIL import Image, ImageTk
 from questions import *
-
 
 class Game:
     def __init__(self, window, player_name):
@@ -69,9 +67,9 @@ class Game:
         joker_frame = tk.Frame(frame, bg="#0b0f2f")
         joker_frame.pack(pady=15)
 
-        tk.Button(joker_frame, text="50/50",bg="blue", command=self.use_50,fg="white").pack(side="left", padx=8)
-        tk.Button(joker_frame, text="Dostdan Kömək",bg="blue", command=self.use_friend,fg="white").pack(side="left", padx=8)
-        tk.Button(joker_frame, text="Tamaşaçılardan Kömək",bg="blue", command=self.use_audience,fg="white").pack(side="left", padx=8)
+        tk.Button(joker_frame, text="50/50",bg="blue", command=self.joker_50,fg="white").pack(side="left", padx=8)
+        tk.Button(joker_frame, text="Dostdan Kömək",bg="blue", command=self.joker_friend,fg="white").pack(side="left", padx=8)
+        tk.Button(joker_frame, text="Tamaşaçılardan Kömək",bg="blue", command=self.joker_audience,fg="white").pack(side="left", padx=8)
 
     def next_question(self):
         if self.index >= len(self.questions):
@@ -121,7 +119,7 @@ class Game:
             messagebox.showinfo("Təbriklər!","Siz böyük mükafatın sahibisiniz!")
 
 
-    def use_50(self):
+    def joker_50(self):
         if not self.jokers["50"]:
             return
 
@@ -137,14 +135,14 @@ class Game:
         messagebox.showinfo("50/50", f"{removed} silindi")
         self.jokers["50"] = False
 
-    def use_friend(self):
+    def joker_friend(self):
         if not self.jokers["call"]:
             return
         q = self.questions[self.index]
         messagebox.showinfo("Dostdan Kömək", f"Məncə cavab {q[2]}-dir! ")
         self.jokers["call"] = False
 
-    def use_audience(self):
+    def joker_audience(self):
         if not self.jokers["audience"]:
             return
 
@@ -156,6 +154,6 @@ class Game:
     def end_game(self):
         messagebox.showinfo(
             "Nəticə",
-            f"Ad: {self.player_name}\nPul: {self.money}\nDoğru: {self.correct}"
+            f"Adınız: {self.player_name}\nQazandığınız Pul: {self.money}\nDoğru Cavab Sayı: {self.correct}"
         )
         self.window.quit()
