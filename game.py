@@ -3,7 +3,8 @@ from tkinter import messagebox
 import random
 
 
-def load_questions(self):
+
+def load_questions():
     questions = []
 
     with open("questions.txt", "r", encoding="utf-8") as file:
@@ -27,7 +28,7 @@ class Game:
         self.moneys = [1000, 2000, 5000, 10000, 20000,
                        40000, 80000, 150000, 300000, 1000000]
 
-        self.questions = load_questions(self)
+        self.questions = load_questions()
 
         self.index = 0
         self.money = 0
@@ -44,10 +45,6 @@ class Game:
 
         self.setup()
         self.next_question()
-        self.questions = load_questions(self)
-
-
-
 
     def setup(self):
         for widget in self.window.winfo_children():
@@ -62,7 +59,6 @@ class Game:
             fg="white",
             bg="#1a1f4f",
             font=("Verdana", 15, "bold"),
-            wraplength=300,
             width=35,
             pady=15,
             padx=10,
@@ -74,12 +70,10 @@ class Game:
                 frame,
                 text="",
                 width=35,
-                height=2,
+                height=1,
                 font=("Verdana", 11, "bold"),
                 bg="#2a2f6f",
                 fg="white",
-                relief="flat",
-                activebackground="#4b4fff",
                 command = lambda k=key: self.check(k)
             )
             btn.pack(pady=5)
@@ -117,27 +111,27 @@ class Game:
             self.buttons[ans].config(bg="green")
 
             messagebox.showinfo("Doğru!", f"Təbriklər, siz artıq {self.money} qazandınız")
-
             self.index += 1
+
+            if self.index >= len(self.questions):
+                messagebox.showinfo("Təbriklər!", "Siz böyük mükafatın sahibisiniz!")
+                self.end_game()
+                return
+
+            if self.index == 7:
+                if not messagebox.askyesno("Info", "Siz artıq 7-ci sualdasınız, davam etmık istəyirsiniz?"):
+                    self.end_game()
+                    return
             self.next_question()
+
         else:
             self.wrong += 1
 
             self.buttons[ans].config(bg="red")
             self.buttons[q[2]].config(bg="green")
 
-            messagebox.showerror("Səhv!", f"Düzgün cavab: {q[2]}-dir!")
-
+            messagebox.showerror("Səhv!", f"Səhv, Düzgün cavab: {q[2]}-dir!")
             self.end_game()
-
-        if self.index == 7:
-            if messagebox.askyesno("Info","Siz artıq 7-ci sualdansınız,davam etmık istəyirsiniz?"):
-                return
-            else:
-                self.end_game()
-
-        if self.index == 10:
-            messagebox.showinfo("Təbriklər!","Siz böyük mükafatın sahibisiniz!")
 
 
     def joker_50(self):
